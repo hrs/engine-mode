@@ -86,12 +86,13 @@
        (quote ,(engine/function-name engine-name)))))
 
 (defmacro defengine (engine-name search-engine-url &optional keybinding)
-  `(progn (defun ,(engine/function-name engine-name) ()
-            ,(engine/docstring engine-name)
-            (interactive)
-            (engine/execute-search ,search-engine-url
-                                   (engine/get-query ,(symbol-name engine-name))))
-          ,(engine/bind-key engine-name keybinding)))
+  (let ((evaled-engine-name engine-name))
+    `(progn (defun ,(engine/function-name evaled-engine-name) ()
+              ,(engine/docstring evaled-engine-name)
+              (interactive )
+              (engine/execute-search ,search-engine-url
+                                     (engine/get-query ,(symbol-name evaled-engine-name))))
+            ,(engine/bind-key evaled-engine-name keybinding))))
 
 (provide 'engine-mode)
 ;;; engine-mode.el ends here
