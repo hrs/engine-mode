@@ -1,4 +1,4 @@
-;;; engine.el --- Define and query search engines from within Emacs.
+;;; engine-mode.el --- Define and query search engines from within Emacs.
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
 ;; Version: 2014.05.06
