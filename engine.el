@@ -1,12 +1,37 @@
-;;; engine.el --- Define and query search engines from within Emacs
+;;; engine.el --- Define and query search engines from within Emacs.
 
-;; Copyright 2014 Harry Schwartz
-
-;; Author: Harry Schwartz <hello@harryrschwartz.com>
+;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
 ;; Version: 2014.05.06
 ;; URL: https://github.com/hrs/engine-mode/engine.el
 
-;; This file is not part of GNU Emacs
+;; This file is NOT part of GNU Emacs.
+
+;;; Commentary:
+
+;; `engine-mode' is a global minor mode for Emacs. It enables you to
+;; easily define search engines, bind them to keybindings, and query
+;; them from the comfort of your editor.
+
+;; For example, suppose we want to be able to easily search GitHub:
+
+;; (defengine github
+;;   "https://github.com/search?ref=simplesearch&q=%s")
+
+;; This defines an interactive function `engine/search-github'. When
+;; executed it will take the selected region (or prompt for input, if
+;; no region is selected) and search GitHub for it, displaying the
+;; results in your default browser.
+
+;; The `defengine' macro can also take an optional key combination:
+
+;; (defengine duckduckgo
+;;   "https://duckduckgo.com/?q=%s"
+;;   "C-c / d")
+
+;; `C-c / d' is now bound to the new function
+;; qengine/search-duckduckgo'! Nifty.
+
+;;; License:
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,7 +49,7 @@
 ;;; Code:
 
 (define-minor-mode engine-mode
-  "Define search engines."
+  "Minor mode for defining and querying search engines through Emacs."
   :global t
   :keymap (make-sparse-keymap))
 
