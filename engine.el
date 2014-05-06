@@ -1,0 +1,72 @@
+;;; engine.el --- Define and query search engines from within Emacs
+
+;; Copyright 2014 Harry Schwartz
+
+;; Author: Harry Schwartz <hello@harryrschwartz.com>
+;; Version: 2014.05.06
+;; URL: https://github.com/hrs/engine-mode/engine.el
+
+;; This file is not part of GNU Emacs
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Code:
+
+(define-minor-mode engine-mode
+  "Define search engines."
+  :global t
+  :keymap (make-sparse-keymap))
+
+(defun engine/search-prompt (engine-name)
+  (concat "Search " (capitalize engine-name) ": "))
+
+(defun engine/prompted-search-term (engine-name)
+  (read-string (engine/search-prompt engine-name)))
+
+(defun engine/get-query (engine-name)
+  "Return the selected region (if any) or prompt the user for a query."
+  (if mark-active
+      (buffer-substring (region-beginning) (region-end))
+    (engine/prompted-search-term engine-name)))
+
+(defun engine/execute-search (search-engine-url search-term)
+  "Display the results of the query."
+  (interactive)
+  (browse-url
+   (format search-engine-url
+           (url-hexify-string search-term))))
+
+(defun engine/function-name (engine-name)
+  (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
+
+(defun engine/docstring (engine-name)
+  (concat "Search "
+          (capitalize (symbol-name engine-name))
+          " for the selected text. Prompt for input if none is selected."))
+
+(defun engine/bind-key (engine-name keybinding)
+  (when keybinding
+    `(define-key engine-mode-map (kbd ,keybinding)
+       (quote ,(engine/function-name engine-name)))))
+
+(defmacro defengine (engine-name search-engine-url &optional keybinding)
+  `(progn (defun ,(engine/function-name engine-name) ()
+            ,(engine/docstring engine-name)
+            (interactive)
+            (engine/execute-search ,search-engine-url
+                                   (engine/get-query ,(symbol-name engine-name))))
+          ,(engine/bind-key engine-name keybinding)))
+
+(provide 'engine-mode)
+;;; engine-mode.el ends here
