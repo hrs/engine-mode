@@ -47,6 +47,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
+(eval-when-compile (require 'cl))
 
 (define-minor-mode engine-mode
   "Minor mode for defining and querying search engines through Emacs."
@@ -61,7 +62,7 @@
 
 (defun engine/get-query (engine-name)
   "Return the selected region (if any) or prompt the user for a query."
-  (if mark-active
+  (if (use-region-p)
       (buffer-substring (region-beginning) (region-end))
     (engine/prompted-search-term engine-name)))
 
@@ -86,14 +87,14 @@
        (quote ,(engine/function-name engine-name)))))
 
 (defmacro defengine (engine-name search-engine-url &optional keybinding)
-  (let ((evaled-engine-name engine-name)
-        (search-term (gensym)))
-    `(progn (defun ,(engine/function-name evaled-engine-name) (,search-term)
-              ,(engine/docstring evaled-engine-name)
-              (interactive
-               (list (engine/get-query ,(symbol-name evaled-engine-name))))
-              (engine/execute-search ,search-engine-url ,search-term))
-            ,(engine/bind-key evaled-engine-name keybinding))))
+  (assert (symbolp engine-name))
+  `(prog1
+     (defun ,(engine/function-name engine-name) (search-term)
+       ,(engine/docstring engine-name)
+       (interactive
+        (list (engine/get-query ,(symbol-name engine-name))))
+       (engine/execute-search ,search-engine-url search-term))
+     ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)
 ;;; engine-mode.el ends here
