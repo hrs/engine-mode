@@ -35,7 +35,7 @@ In the meantime, you can install it like any other elisp file by adding
 it to your load path and globally enabling it:
 
 ```emacs
-(require 'engine)
+(require 'engine-mode)
 (engine-mode t)
 ```
 
