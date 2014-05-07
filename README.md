@@ -29,10 +29,10 @@ Nifty.
 
 ## Installation
 
-`engine-mode` should soon be available on MELPA shortly.
+`engine-mode` is available on MELPA.
 
-In the meantime, you can install it like any other elisp file by adding
-it to your load path and globally enabling it:
+You can also install it like any other elisp file by adding it to your
+load path and globally enabling it:
 
 ```emacs
 (require 'engine-mode)
