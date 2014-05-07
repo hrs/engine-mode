@@ -29,7 +29,7 @@
 ;;   "C-c / d")
 
 ;; `C-c / d' is now bound to the new function
-;; qengine/search-duckduckgo'! Nifty.
+;; engine/search-duckduckgo'! Nifty.
 
 ;;; License:
 
