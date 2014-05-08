@@ -87,6 +87,23 @@
        (quote ,(engine/function-name engine-name)))))
 
 (defmacro defengine (engine-name search-engine-url &optional keybinding)
+  "Define a custom search engine.
+
+`engine-name' is a symbol naming the engine.
+`search-engine-url' is the url to be queried, with a \"%s\"
+standing in for the search term.
+The optional value `keybinding' is a string describing the key to
+bind the new function.
+
+For example, to search Wikipedia, use:
+
+  (defengine wikipedia
+    \"http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s\"
+    \"C-c / w\")
+
+Hitting \"C-c / w\" will be bound to the newly-defined
+`engine/search-wikipedia' function."
+
   (assert (symbolp engine-name))
   `(prog1
      (defun ,(engine/function-name engine-name) (search-term)
