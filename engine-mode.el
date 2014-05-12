@@ -1,8 +1,8 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs.
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2014.05.06
-;; URL: https://github.com/hrs/engine-mode/engine.el
+;; Version: 2014.05.12
+;; URL: https://github.com/hrs/engine-mode/engine-mode.el
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -22,11 +22,12 @@
 ;; no region is selected) and search GitHub for it, displaying the
 ;; results in your default browser.
 
-;; The `defengine' macro can also take an optional key combination:
+;; The `defengine' macro can also take an optional key combination,
+;; prefixed with `engine/keymap-prefix' (which defaults to "C-c /"):
 
 ;; (defengine duckduckgo
 ;;   "https://duckduckgo.com/?q=%s"
-;;   "C-c / d")
+;;   "d")
 
 ;; `C-c / d' is now bound to the new function
 ;; engine/search-duckduckgo'! Nifty.
@@ -53,6 +54,11 @@
   "Minor mode for defining and querying search engines through Emacs."
   :global t
   :keymap (make-sparse-keymap))
+
+(defcustom engine/keymap-prefix (kbd "C-c /")
+  "Engine-mode keymap prefix."
+  :group 'engine-mode
+  :type 'string)
 
 (defun engine/search-prompt (engine-name)
   (concat "Search " (capitalize engine-name) ": "))
@@ -81,9 +87,12 @@
           (capitalize (symbol-name engine-name))
           " for the selected text. Prompt for input if none is selected."))
 
+(defun engine/scope-keybinding (keybinding)
+  (concat engine/keymap-prefix " " keybinding))
+
 (defun engine/bind-key (engine-name keybinding)
   (when keybinding
-    `(define-key engine-mode-map (kbd ,keybinding)
+    `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
 (defmacro defengine (engine-name search-engine-url &optional keybinding)
@@ -95,11 +104,14 @@ standing in for the search term.
 The optional value `keybinding' is a string describing the key to
 bind the new function.
 
+Keybindings are prefixed by the `engine/keymap-prefix', which
+defaults to `C-c /'.
+
 For example, to search Wikipedia, use:
 
   (defengine wikipedia
     \"http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s\"
-    \"C-c / w\")
+    \"w\")
 
 Hitting \"C-c / w\" will be bound to the newly-defined
 `engine/search-wikipedia' function."

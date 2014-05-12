@@ -16,12 +16,13 @@ executed it will take the selected region (or prompt for input, if no
 region is selected) and search GitHub for it, displaying the results
 in your default browser.
 
-The `defengine` macro can also take an optional key combination:
+The `defengine` macro can also take an optional key combination,
+prefixed with `engine/keymap-prefix' (which defaults to "C-c /"):
 
 ```emacs
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
-  "C-c / d")
+  "d")
 ```
 
 `C-c / d` is now bound to the new function `engine/search-duckduckgo`!
@@ -47,14 +48,14 @@ load path and globally enabling it:
 
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
-  "C-c / d")
+  "d")
 
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
 (defengine google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-  "C-c / g")
+  "g")
 
 (defengine google-images
   "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s")
@@ -76,7 +77,7 @@ load path and globally enabling it:
 
 (defengine wikipedia
   "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
-  "C-c / w")
+  "w")
 
 (defengine wiktionary
   "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")
