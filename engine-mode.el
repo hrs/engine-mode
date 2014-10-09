@@ -60,6 +60,12 @@
   :group 'engine-mode
   :type 'string)
 
+(defcustom engine/browser-function browse-url-browser-function
+  "The browser function used in call to `browse-url'.
+By default it is the same as `browse-url-browser-function'."
+  :group 'engine-mode
+  :type 'symbol)
+
 (defun engine/search-prompt (engine-name)
   (concat "Search " (capitalize engine-name) ": "))
 
@@ -75,9 +81,10 @@
 (defun engine/execute-search (search-engine-url search-term)
   "Display the results of the query."
   (interactive)
-  (browse-url
-   (format search-engine-url
-           (url-hexify-string search-term))))
+  (let ((browse-url-browser-function engine/browser-function))
+    (browse-url
+     (format search-engine-url
+             (url-hexify-string search-term)))))
 
 (defun engine/function-name (engine-name)
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
