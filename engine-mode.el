@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs.
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2014.05.12
+;; Version: 2015.02.07
 ;; URL: https://github.com/hrs/engine-mode/engine-mode.el
 
 ;; This file is NOT part of GNU Emacs.
@@ -64,7 +64,7 @@
   (concat "Search " (capitalize engine-name) ": "))
 
 (defun engine/prompted-search-term (engine-name)
-  (read-string (engine/search-prompt engine-name)))
+  (read-string (engine/search-prompt engine-name) (thing-at-point 'symbol)))
 
 (defun engine/get-query (engine-name)
   "Return the selected region (if any) or prompt the user for a query."
