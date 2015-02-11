@@ -17,7 +17,7 @@ region is selected) and search GitHub for it, displaying the results
 in your default browser.
 
 The `defengine` macro can also take an optional key combination,
-prefixed with `engine/keymap-prefix' (which defaults to "C-c /"):
+prefixed with `engine/keymap-prefix` (which defaults to "C-c /"):
 
 ```emacs
 (defengine duckduckgo
@@ -39,6 +39,23 @@ load path and globally enabling it:
 (require 'engine-mode)
 (engine-mode t)
 ```
+
+## Changing your default browser
+
+`engine-mode` uses `browse-url` to open the URL it constructs. To
+change the browser that `browse-url` uses, you'll need to redefine
+the `browse-url-browser-function` variable.
+
+For example, to use Emacs' built-in `eww` browser:
+
+```emacs
+(setq browse-url-browser-function 'eww-browse-url)
+```
+
+The implementation of the `browse-url-browser-function` variable
+contains a comprehensive list of possible browsing functions. You can
+get to that by hitting `C-h v browser-url-browser-function <RETURN>`
+and following the link to `browse-url.el`.
 
 ## Examples
 
