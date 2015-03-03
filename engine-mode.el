@@ -126,7 +126,8 @@ Hitting \"C-c / w\" will be bound to the newly-defined
        (interactive
         (list (engine/get-query ,(symbol-name engine-name))))
        (engine/execute-search ,search-engine-url search-term))
-     (cons 'engine-mode-alist (list ',engine-name ,keybinding))
+     (setq engine-mode-alist
+	   (cons (list ',engine-name ,keybinding) engine-mode-alist))
      ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)

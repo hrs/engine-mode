@@ -1,3 +1,4 @@
+(load-file "./engine-mode.el")
 (ert-deftest engine-test-alist ()
        "Tests setting `engine-mode-alist"
        (setq engine-mode-alist nil)
