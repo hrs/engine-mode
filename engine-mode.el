@@ -50,6 +50,9 @@
 ;;; Code:
 (eval-when-compile (require 'cl))
 
+(defvar engine-mode-alist nil
+  "list of engine-mode search engines and keymap bindings")
+
 (define-minor-mode engine-mode
   "Minor mode for defining and querying search engines through Emacs."
   :global t
@@ -123,6 +126,7 @@ Hitting \"C-c / w\" will be bound to the newly-defined
        (interactive
         (list (engine/get-query ,(symbol-name engine-name))))
        (engine/execute-search ,search-engine-url search-term))
+     (cons 'engine-mode-alist (list ',engine-name ,keybinding))
      ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)
