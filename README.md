@@ -57,7 +57,15 @@ contains a comprehensive list of possible browsing functions. You can
 get to that by hitting `C-h v browser-url-browser-function <RETURN>`
 and following the link to `browse-url.el`.
 
-## Examples
+## Importing keyword searches from other browsers
+
+Since many browsers save keyword searches using the same format as
+engine-mode (that is, by using `%s` in a url to indicate a search
+term), it's not too hard to import them into Emacs.
+
+@sshaw has written a script to [import from Chrome on OS X].
+
+## Engine examples
 
 ```emacs
 (defengine amazon
@@ -105,3 +113,5 @@ and following the link to `browse-url.el`.
 (defengine youtube
   "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
 ```
+
+[import from Chrome on OS X]: https://gist.github.com/sshaw/9b635eabde582ebec442
