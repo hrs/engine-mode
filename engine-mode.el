@@ -51,7 +51,9 @@
 (eval-when-compile (require 'cl))
 
 (define-minor-mode engine-mode
-  "Minor mode for defining and querying search engines through Emacs."
+  "Minor mode for defining and querying search engines through Emacs.
+
+\\{engine-mode-map}"
   :global t
   :keymap (make-sparse-keymap))
 
