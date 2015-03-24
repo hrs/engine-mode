@@ -28,6 +28,9 @@ prefixed with `engine/keymap-prefix` (which defaults to "C-c /"):
 `C-c / d` is now bound to the new function `engine/search-duckduckgo`!
 Nifty.
 
+If you'd like to see a video on the whys and wherefores of this mode,
+check out [the talk @hrs gave at EmacsNYC].
+
 ## Installation
 
 `engine-mode` is available on MELPA.
@@ -114,4 +117,5 @@ term), it's not too hard to import them into Emacs.
   "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
 ```
 
+[the talk @hrs gave at EmacsNYC]: https://www.youtube.com/watch?v=MBhJBMYfWUo
 [import from Chrome on OS X]: https://gist.github.com/sshaw/9b635eabde582ebec442
