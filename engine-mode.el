@@ -97,7 +97,7 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(defmacro defengine (engine-name search-engine-url &optional keybinding)
+(defmacro defengine (engine-name search-engine-url &optional keybinding &rest args)
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.
@@ -124,7 +124,10 @@ Hitting \"C-c / w\" will be bound to the newly-defined
        ,(engine/docstring engine-name)
        (interactive
         (list (engine/get-query ,(symbol-name engine-name))))
-       (engine/execute-search ,search-engine-url search-term))
+       (engine/execute-search ,search-engine-url
+                              ,(if (plist-get args ':coding)
+                                   `(encode-coding-string search-term ',(plist-get args ':coding))
+                                 'search-term)))
      ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)
