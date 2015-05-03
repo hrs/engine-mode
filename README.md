@@ -22,7 +22,7 @@ prefixed with `engine/keymap-prefix` (which defaults to "C-c /"):
 ```emacs
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
-  "d")
+  :keybinding "d")
 ```
 
 `C-c / d` is now bound to the new function `engine/search-duckduckgo`!
@@ -80,7 +80,10 @@ Since many browsers save keyword searches using the same format as
 engine-mode (that is, by using `%s` in a url to indicate a search
 term), it's not too hard to import them into Emacs.
 
-@sshaw has written a script to [import from Chrome on OS X].
+@sshaw has written a script to [import from Chrome on OS X], but it's
+based on an older version of `engine-mode`, so the resulting file may
+need a bit of manual cleaning-up (specifically, you may need to add
+the `:keybinding` keyword to the generated engine definitions).
 
 ## Engine examples
 
@@ -90,14 +93,14 @@ term), it's not too hard to import them into Emacs.
 
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
-  "d")
+  :keybinding "d")
 
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
 (defengine google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-  "g")
+  :keybinding "g")
 
 (defengine google-images
   "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s")
@@ -119,7 +122,7 @@ term), it's not too hard to import them into Emacs.
 
 (defengine wikipedia
   "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
-  "w")
+  :keybinding "w")
 
 (defengine wiktionary
   "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")

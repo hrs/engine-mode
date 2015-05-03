@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs.
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2015.02.07
+;; Version: 2015.05.02
 ;; URL: https://github.com/hrs/engine-mode/engine-mode.el
 
 ;; This file is NOT part of GNU Emacs.
@@ -27,7 +27,7 @@
 
 ;; (defengine duckduckgo
 ;;   "https://duckduckgo.com/?q=%s"
-;;   "d")
+;;   :keybinding "d")
 
 ;; `C-c / d' is now bound to the new function
 ;; engine/search-duckduckgo'! Nifty.
@@ -97,14 +97,14 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(defmacro defengine (engine-name search-engine-url &optional keybinding)
+(cl-defmacro defengine (engine-name search-engine-url &key keybinding)
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.
 `search-engine-url' is the url to be queried, with a \"%s\"
 standing in for the search term.
-The optional value `keybinding' is a string describing the key to
-bind the new function.
+The keyword argument `keybinding' is a string describing the key
+to bind the new function.
 
 Keybindings are prefixed by the `engine/keymap-prefix', which
 defaults to `C-c /'.
@@ -113,7 +113,7 @@ For example, to search Wikipedia, use:
 
   (defengine wikipedia
     \"http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s\"
-    \"w\")
+    :keybinding \"w\")
 
 Hitting \"C-c / w\" will be bound to the newly-defined
 `engine/search-wikipedia' function."
