@@ -60,6 +60,20 @@ contains a comprehensive list of possible browsing functions. You can
 get to that by hitting `C-h v browser-url-browser-function <RETURN>`
 and following the link to `browse-url.el`.
 
+## Changing the keymap prefix
+
+The default keymap prefix for `engine-mode` is `C-c /`. If you'd like
+to use a different prefix (say, `C-c s`), you can redefine it:
+
+```emacs
+(setq engine/keymap-prefix (kbd "C-c s"))
+```
+
+Make sure you redefine the keymap prefix *before* you define your
+engines. `defengine` uses the prefix internally, so if you change the
+prefix after defining your engines you'll find that they still use the
+old prefix.
+
 ## Importing keyword searches from other browsers
 
 Since many browsers save keyword searches using the same format as
