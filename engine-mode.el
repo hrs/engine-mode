@@ -84,10 +84,16 @@
 (defun engine/function-name (engine-name)
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
 
-(defun engine/docstring (engine-name)
-  (concat "Search "
-          (capitalize (symbol-name engine-name))
-          " for the selected text. Prompt for input if none is selected."))
+(defun engine/docstring (engine-name &optional docstring)
+  (let ((name (capitalize (symbol-name engine-name))))
+    (concat "Search "
+            name
+            " for the selected text. Prompt for input if none is selected.\n"
+            (when docstring
+              (concat  
+               name
+               ": "
+               docstring)))))
 
 (defun engine/scope-keybinding (keybinding)
   (concat engine/keymap-prefix " " keybinding))
@@ -97,7 +103,7 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(defmacro defengine (engine-name search-engine-url &optional keybinding)
+(defmacro defengine (engine-name search-engine-url &optional keybinding docstring)
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.
@@ -120,11 +126,11 @@ Hitting \"C-c / w\" will be bound to the newly-defined
 
   (assert (symbolp engine-name))
   `(prog1
-     (defun ,(engine/function-name engine-name) (search-term)
-       ,(engine/docstring engine-name)
-       (interactive
-        (list (engine/get-query ,(symbol-name engine-name))))
-       (engine/execute-search ,search-engine-url search-term))
+       (defun ,(engine/function-name engine-name) (search-term)
+         ,(engine/docstring engine-name docstring)
+         (interactive
+          (list (engine/get-query ,(symbol-name engine-name))))
+         (engine/execute-search ,search-engine-url search-term))
      ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)
