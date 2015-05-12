@@ -97,14 +97,17 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(cl-defmacro defengine (engine-name search-engine-url &key keybinding)
+(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring)
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.
 `search-engine-url' is the url to be queried, with a \"%s\"
 standing in for the search term.
-The keyword argument `keybinding' is a string describing the key
-to bind the new function.
+The optional keyword argument `keybinding' is a string describing
+the key to bind the new function.
+The optional keyword argument `docstring' assigns a docstring to
+the generated function. A reasonably sensible docstring will be
+generated if a custom one isn't provided.
 
 Keybindings are prefixed by the `engine/keymap-prefix', which
 defaults to `C-c /'.
@@ -113,7 +116,8 @@ For example, to search Wikipedia, use:
 
   (defengine wikipedia
     \"http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s\"
-    :keybinding \"w\")
+    :keybinding \"w\"
+    :docstring \"Search Wikipedia!\")
 
 Hitting \"C-c / w\" will be bound to the newly-defined
 `engine/search-wikipedia' function."
@@ -121,7 +125,7 @@ Hitting \"C-c / w\" will be bound to the newly-defined
   (assert (symbolp engine-name))
   `(prog1
      (defun ,(engine/function-name engine-name) (search-term)
-       ,(engine/docstring engine-name)
+       ,(or docstring (engine/docstring engine-name))
        (interactive
         (list (engine/get-query ,(symbol-name engine-name))))
        (engine/execute-search ,search-engine-url search-term))
