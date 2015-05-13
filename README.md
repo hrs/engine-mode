@@ -74,6 +74,18 @@ engines. `defengine` uses the prefix internally, so if you change the
 prefix after defining your engines you'll find that they still use the
 old prefix.
 
+## Custom docstrings
+
+`defengine` assigns each engine a reasonable default docstring, but
+you can override that on a case-by-case basis with the `:docstring`
+keyword argument:
+
+```emacs
+(defengine ctan
+  "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s"
+  :docstring "Search the Comprehensive TeX Archive Network (ctan.org)")
+```
+
 ## Importing keyword searches from other browsers
 
 Since many browsers save keyword searches using the same format as
@@ -106,7 +118,8 @@ the `:keybinding` keyword to the generated engine definitions).
   "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s")
 
 (defengine google-maps
-  "http://maps.google.com/maps?q=%s")
+  "http://maps.google.com/maps?q=%s"
+  :docstring "Mappin' it up.")
 
 (defengine project-gutenberg
   "http://www.gutenberg.org/ebooks/search.html/?format=html&default_prefix=all&sort_order=&query=%s")
@@ -122,7 +135,8 @@ the `:keybinding` keyword to the generated engine definitions).
 
 (defengine wikipedia
   "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
-  :keybinding "w")
+  :keybinding "w"
+  :docstring "Searchin' the wikis.")
 
 (defengine wiktionary
   "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")
