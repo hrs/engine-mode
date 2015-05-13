@@ -97,17 +97,30 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring)
+(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (term-transformation-hook 'identity))
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.
 `search-engine-url' is the url to be queried, with a \"%s\"
 standing in for the search term.
-The optional keyword argument `keybinding' is a string describing
-the key to bind the new function.
 The optional keyword argument `docstring' assigns a docstring to
 the generated function. A reasonably sensible docstring will be
 generated if a custom one isn't provided.
+
+The optional keyword argument `term-transformation-hook' is a
+function that will be applied to the search term before it's
+substituted into `search-engine-url'. For example, if we wanted
+to always upcase our search terms, we might use:
+
+(defengine duckduckgo
+  \"https://duckduckgo.com/?q=%s\"
+  :term-transformation-hook 'upcase)
+
+In this case, searching for \"foobar\" will hit the url
+\"https://duckduckgo.com/?q=FOOBAR\".
+
+The optional keyword argument `keybinding' is a string describing
+the key to bind the new function.
 
 Keybindings are prefixed by the `engine/keymap-prefix', which
 defaults to `C-c /'.
@@ -128,7 +141,7 @@ Hitting \"C-c / w\" will be bound to the newly-defined
        ,(or docstring (engine/docstring engine-name))
        (interactive
         (list (engine/get-query ,(symbol-name engine-name))))
-       (engine/execute-search ,search-engine-url search-term))
+       (engine/execute-search ,search-engine-url (,term-transformation-hook search-term)))
      ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)

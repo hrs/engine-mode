@@ -86,6 +86,32 @@ keyword argument:
   :docstring "Search the Comprehensive TeX Archive Network (ctan.org)")
 ```
 
+## Modifying the search term before sending it
+
+An engine might want to transform a search term in some way before it
+interpolates the term into the URL. Maybe the term should have a
+different encoding, or be capitalized differently, or, uh, be passed
+through [ROT13]. Whatever the reason, you can apply a custom
+transformation to a search term by passing a function to `defengine`
+through the `:term-transformation-hook` keyword argument.
+
+For example, to UPCASE all of your DuckDuckGo searches:
+
+```emacs
+(defengine duckduckgo
+  "https://duckduckgo.com/?q=%s"
+  :term-transformation-hook 'upcase)
+```
+
+Or, to ensure that all your queries are encoded as latin-1:
+
+```emacs
+(defengine diec2
+  "dlc.iec.cat/results.asp?txtEntrada=%s"
+  :term-transformation-hook (lambda (term) (encode-coding-string term latin-1))
+  :keybinding "c")
+```
+
 ## Importing keyword searches from other browsers
 
 Since many browsers save keyword searches using the same format as
@@ -149,4 +175,5 @@ the `:keybinding` keyword to the generated engine definitions).
 ```
 
 [the talk @hrs gave at EmacsNYC]: https://www.youtube.com/watch?v=MBhJBMYfWUo
+[ROT13]: https://en.wikipedia.org/wiki/ROT13
 [import from Chrome on OS X]: https://gist.github.com/sshaw/9b635eabde582ebec442
