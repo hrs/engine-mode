@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs.
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2015.05.02
+;; Version: 2015.05.17
 ;; URL: https://github.com/hrs/engine-mode/engine-mode.el
 
 ;; This file is NOT part of GNU Emacs.
@@ -74,12 +74,13 @@
       (buffer-substring (region-beginning) (region-end))
     (engine/prompted-search-term engine-name)))
 
-(defun engine/execute-search (search-engine-url search-term)
+(defun engine/execute-search (search-engine-url browser-function search-term)
   "Display the results of the query."
   (interactive)
-  (browse-url
-   (format search-engine-url
-           (url-hexify-string search-term))))
+  (let ((browse-url-browser-function browser-function))
+    (browse-url
+     (format search-engine-url
+             (url-hexify-string search-term)))))
 
 (defun engine/function-name (engine-name)
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
@@ -97,7 +98,7 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (term-transformation-hook 'identity))
+(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (browser 'browse-url-browser-function) (term-transformation-hook 'identity))
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.
@@ -106,7 +107,8 @@ standing in for the search term.
 The optional keyword argument `docstring' assigns a docstring to
 the generated function. A reasonably sensible docstring will be
 generated if a custom one isn't provided.
-
+The optional keyword argument `browser` assigns the browser
+function to be used when opening the URL.
 The optional keyword argument `term-transformation-hook' is a
 function that will be applied to the search term before it's
 substituted into `search-engine-url'. For example, if we wanted
@@ -141,7 +143,7 @@ Hitting \"C-c / w\" will be bound to the newly-defined
        ,(or docstring (engine/docstring engine-name))
        (interactive
         (list (engine/get-query ,(symbol-name engine-name))))
-       (engine/execute-search ,search-engine-url (,term-transformation-hook search-term)))
+       (engine/execute-search ,search-engine-url ,browser (,term-transformation-hook search-term)))
      ,(engine/bind-key engine-name keybinding)))
 
 (provide 'engine-mode)

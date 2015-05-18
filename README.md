@@ -60,6 +60,21 @@ contains a comprehensive list of possible browsing functions. You can
 get to that by hitting `C-h v browser-url-browser-function <RETURN>`
 and following the link to `browse-url.el`.
 
+## Changing your browser on a per-engine basis
+
+To only change the browser for a single engine, use the `:browser`
+keyword argument when you define the engine. For example, to use `eww`
+only for your GitHub search results, try:
+
+```emacs
+(defengine github
+  "https://github.com/search?ref=simplesearch&q=%s"
+  :browser 'eww-browse-url)
+```
+
+As mentioned about, see the implementation of the
+`browse-url-browser-function` for a definitive list of browsers.
+
 ## Changing the keymap prefix
 
 The default keymap prefix for `engine-mode` is `C-c /`. If you'd like
