@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs.
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2015.05.17
+;; Version: 2015.05.19
 ;; URL: https://github.com/hrs/engine-mode/engine-mode.el
 
 ;; This file is NOT part of GNU Emacs.
@@ -62,6 +62,12 @@
   :group 'engine-mode
   :type 'string)
 
+(defcustom engine/browser-function browse-url-browser-function
+  "The default browser function used when opening a URL in an engine.
+Defaults to `browse-url-browser-function'."
+  :group 'engine-mode
+  :type 'symbol)
+
 (defun engine/search-prompt (engine-name)
   (concat "Search " (capitalize engine-name) ": "))
 
@@ -98,7 +104,7 @@
     `(define-key engine-mode-map (kbd ,(engine/scope-keybinding keybinding))
        (quote ,(engine/function-name engine-name)))))
 
-(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (browser 'browse-url-browser-function) (term-transformation-hook 'identity))
+(cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (browser 'engine/browser-function) (term-transformation-hook 'identity))
   "Define a custom search engine.
 
 `engine-name' is a symbol naming the engine.

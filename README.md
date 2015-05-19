@@ -45,18 +45,20 @@ load path and globally enabling it:
 
 ## Changing your default browser
 
-`engine-mode` uses `browse-url` to open the URL it constructs. To
-change the browser that `browse-url` uses, you'll need to redefine
-the `browse-url-browser-function` variable.
-
-For example, to use Emacs' built-in `eww` browser:
+`engine-mode` uses the `engine/browser-function` variable to determine
+which browser it should use to open the URL it constructs. To change
+the default browser, redefine `engine/browser-function`. For example,
+to always use Emacs' built-in `eww` browser:
 
 ```emacs
-(setq browse-url-browser-function 'eww-browse-url)
+(setq engine/browser-function 'eww-browse-url)
 ```
 
+`engine/browser-function` defaults to `browse-url-browser-function`,
+which Emacs uses globally to open links.
+
 The implementation of the `browse-url-browser-function` variable
-contains a comprehensive list of possible browsing functions. You can
+contains a comprehensive list of possible browser functions. You can
 get to that by hitting `C-h v browser-url-browser-function <RETURN>`
 and following the link to `browse-url.el`.
 
