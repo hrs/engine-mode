@@ -163,7 +163,7 @@ the `:keybinding` keyword to the generated engine definitions).
   :docstring "Mappin' it up.")
 
 (defengine project-gutenberg
-  "http://www.gutenberg.org/ebooks/search.html/?format=html&default_prefix=all&sort_order=&query=%s")
+  "http://www.gutenberg.org/ebooks/search/?query=%s")
 
 (defengine rfcs
   "http://pretty-rfc.herokuapp.com/search?q=%s")
