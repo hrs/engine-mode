@@ -129,14 +129,11 @@ Or, to ensure that all your queries are encoded as latin-1:
 
 ## Importing keyword searches from other browsers
 
-Since many browsers save keyword searches using the same format as
-engine-mode (that is, by using `%s` in a url to indicate a search
-term), it's not too hard to import them into Emacs.
+Since many browsers save keyword searches using the same format as engine-mode
+(that is, by using `%s` in a url to indicate a search term), it's not too hard
+to import them into Emacs.
 
-@sshaw has written a script to [import from Chrome on OS X], but it's
-based on an older version of `engine-mode`, so the resulting file may
-need a bit of manual cleaning-up (specifically, you may need to add
-the `:keybinding` keyword to the generated engine definitions).
+[@sshaw] has written a script to [import from Chrome on OS X]. Thanks for that!
 
 ## Engine examples
 
@@ -191,4 +188,5 @@ the `:keybinding` keyword to the generated engine definitions).
 
 [the talk @hrs gave at EmacsNYC]: https://www.youtube.com/watch?v=MBhJBMYfWUo
 [ROT13]: https://en.wikipedia.org/wiki/ROT13
+[@sshaw]: https://github.com/sshaw
 [import from Chrome on OS X]: https://gist.github.com/sshaw/9b635eabde582ebec442
