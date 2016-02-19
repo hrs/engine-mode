@@ -7,6 +7,8 @@
 search engines, bind them to keybindings, and query them from the comfort of
 your editor.
 
+![demo](doc/demo.gif)
+
 For example, suppose we want to be able to easily search GitHub:
 
 ```emacs
