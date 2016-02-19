@@ -3,9 +3,9 @@
 [![Melpa Stable Status](http://melpa-stable.milkbox.net/packages/engine-mode-badge.svg)](http://melpa-stable.milkbox.net/#/engine-mode)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-`engine-mode` is a global minor mode for Emacs. It enables you to
-easily define search engines, bind them to keybindings, and query them
-from the comfort of your editor.
+`engine-mode` is a global minor mode for Emacs. It enables you to easily define
+search engines, bind them to keybindings, and query them from the comfort of
+your editor.
 
 For example, suppose we want to be able to easily search GitHub:
 
@@ -14,13 +14,12 @@ For example, suppose we want to be able to easily search GitHub:
   "https://github.com/search?ref=simplesearch&q=%s")
 ```
 
-This defines an interactive function `engine/search-github`. When
-executed it will take the selected region (or prompt for input, if no
-region is selected) and search GitHub for it, displaying the results
-in your default browser.
+This defines an interactive function `engine/search-github`. When executed it
+will take the selected region (or prompt for input, if no region is selected)
+and search GitHub for it, displaying the results in your default browser.
 
-The `defengine` macro can also take an optional key combination,
-prefixed with `engine/keymap-prefix` (which defaults to "C-c /"):
+The `defengine` macro can also take an optional key combination, prefixed with
+`engine/keymap-prefix` (which defaults to "C-c /"):
 
 ```emacs
 (defengine duckduckgo
@@ -28,18 +27,17 @@ prefixed with `engine/keymap-prefix` (which defaults to "C-c /"):
   :keybinding "d")
 ```
 
-`C-c / d` is now bound to the new function `engine/search-duckduckgo`!
-Nifty.
+`C-c / d` is now bound to the new function `engine/search-duckduckgo`! Nifty.
 
-If you'd like to see a video on the whys and wherefores of this mode,
-check out [the talk @hrs gave at EmacsNYC].
+If you'd like to see a video on the whys and wherefores of this mode, check out
+[the talk @hrs gave at EmacsNYC].
 
 ## Installation
 
 `engine-mode` is available on MELPA.
 
-You can also install it like any other elisp file by adding it to your
-load path and globally enabling it:
+You can also install it like any other elisp file by adding it to your load path
+and globally enabling it:
 
 ```emacs
 (require 'engine-mode)
@@ -48,28 +46,28 @@ load path and globally enabling it:
 
 ## Changing your default browser
 
-`engine-mode` uses the `engine/browser-function` variable to determine
-which browser it should use to open the URL it constructs. To change
-the default browser, redefine `engine/browser-function`. For example,
-to always use Emacs' built-in `eww` browser:
+`engine-mode` uses the `engine/browser-function` variable to determine which
+browser it should use to open the URL it constructs. To change the default
+browser, redefine `engine/browser-function`. For example, to always use Emacs'
+built-in `eww` browser:
 
 ```emacs
 (setq engine/browser-function 'eww-browse-url)
 ```
 
-`engine/browser-function` defaults to `browse-url-browser-function`,
-which Emacs uses globally to open links.
+`engine/browser-function` defaults to `browse-url-browser-function`, which Emacs
+uses globally to open links.
 
-The implementation of the `browse-url-browser-function` variable
-contains a comprehensive list of possible browser functions. You can
-get to that by hitting `C-h v browser-url-browser-function <RETURN>`
-and following the link to `browse-url.el`.
+The implementation of the `browse-url-browser-function` variable contains a
+comprehensive list of possible browser functions. You can get to that by hitting
+`C-h v browser-url-browser-function <RETURN>` and following the link to
+`browse-url.el`.
 
 ## Changing your browser on a per-engine basis
 
-To only change the browser for a single engine, use the `:browser`
-keyword argument when you define the engine. For example, to use `eww`
-only for your GitHub search results, try:
+To only change the browser for a single engine, use the `:browser` keyword
+argument when you define the engine. For example, to use `eww` only for your
+GitHub search results, try:
 
 ```emacs
 (defengine github
@@ -77,14 +75,13 @@ only for your GitHub search results, try:
   :browser 'eww-browse-url)
 ```
 
-As mentioned about, see the implementation of the
-`browse-url-browser-function` for a definitive list of browsers.
+As mentioned about, see the implementation of the `browse-url-browser-function`
+for a definitive list of browsers.
 
 ## Changing the keymap prefix
 
-The default keymap prefix for `engine-mode` is `C-c /`. If you'd like
-to bind the keymap to an additional prefix (say, `C-c s`), you totally
-can:
+The default keymap prefix for `engine-mode` is `C-c /`. If you'd like to bind
+the keymap to an additional prefix (say, `C-c s`), you totally can:
 
 ```emacs
 (engine/set-keymap-prefix (kbd "C-c s"))
@@ -92,9 +89,8 @@ can:
 
 ## Custom docstrings
 
-`defengine` assigns each engine a reasonable default docstring, but
-you can override that on a case-by-case basis with the `:docstring`
-keyword argument:
+`defengine` assigns each engine a reasonable default docstring, but you can
+override that on a case-by-case basis with the `:docstring` keyword argument:
 
 ```emacs
 (defengine ctan
@@ -105,11 +101,11 @@ keyword argument:
 ## Modifying the search term before sending it
 
 An engine might want to transform a search term in some way before it
-interpolates the term into the URL. Maybe the term should have a
-different encoding, or be capitalized differently, or, uh, be passed
-through [ROT13]. Whatever the reason, you can apply a custom
-transformation to a search term by passing a function to `defengine`
-through the `:term-transformation-hook` keyword argument.
+interpolates the term into the URL. Maybe the term should have a different
+encoding, or be capitalized differently, or, uh, be passed through [ROT13].
+Whatever the reason, you can apply a custom transformation to a search term by
+passing a function to `defengine` through the `:term-transformation-hook`
+keyword argument.
 
 For example, to UPCASE all of your DuckDuckGo searches:
 
