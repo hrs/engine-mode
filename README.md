@@ -1,6 +1,7 @@
 # engine-mode
 
 [![Melpa Stable Status](http://melpa-stable.milkbox.net/packages/engine-mode-badge.svg)](http://melpa-stable.milkbox.net/#/engine-mode)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 `engine-mode` is a global minor mode for Emacs. It enables you to
 easily define search engines, bind them to keybindings, and query them
