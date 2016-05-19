@@ -67,7 +67,12 @@ For example, to use \"C-c s\" instead of the default \"C-c /\":
 (engine/set-keymap-prefix (kbd \"C-c s\"))"
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
 
-(engine/set-keymap-prefix (kbd "C-c /"))
+(defcustom engine/keybinding-prefix "C-x /"
+  "The default engine-mode keybindings prefix."
+  :group 'engine-mode
+  :type 'string)
+
+(engine/set-keymap-prefix (kbd engine/keybinding-prefix))
 
 (defcustom engine/browser-function browse-url-browser-function
   "The default browser function used when opening a URL in an engine.
