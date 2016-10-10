@@ -115,6 +115,7 @@ Defaults to `browse-url-browser-function'."
     `(define-key engine-mode-prefixed-map ,keybinding
        (quote ,(engine/function-name engine-name)))))
 
+;;;###autoload
 (cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (browser 'engine/browser-function) (term-transformation-hook 'identity))
   "Define a custom search engine.
 
