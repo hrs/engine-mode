@@ -3,6 +3,7 @@
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
 ;; Version: 2.0.0
 ;; URL: https://github.com/hrs/engine-mode/engine-mode.el
+;; Package-Requires: ((cl-lib "0.5"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -48,7 +49,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
-(eval-when-compile (require 'cl))
+(require 'cl-lib)
 
 (defvar engine-mode-map (make-sparse-keymap))
 (defvar engine-mode-prefixed-map (make-sparse-keymap))
