@@ -22,7 +22,7 @@ will take the selected region (or prompt for input, if no region is selected)
 and search GitHub for it, displaying the results in your default browser.
 
 The `defengine` macro can also take an optional key combination, prefixed with
-`engine/keymap-prefix` (which defaults to "C-c /"):
+`engine/keymap-prefix` (which defaults to "C-x /"):
 
 ```emacs
 (defengine duckduckgo
@@ -30,7 +30,7 @@ The `defengine` macro can also take an optional key combination, prefixed with
   :keybinding "d")
 ```
 
-`C-c / d` is now bound to the new function `engine/search-duckduckgo`! Nifty.
+`C-x / d` is now bound to the new function `engine/search-duckduckgo`! Nifty.
 
 If you'd like to see a video on the whys and wherefores of this mode, check out
 [the talk @hrs gave at EmacsNYC].
@@ -83,7 +83,7 @@ for a definitive list of browsers.
 
 ## Changing the keymap prefix
 
-The default keymap prefix for `engine-mode` is `C-c /`. If you'd like to bind
+The default keymap prefix for `engine-mode` is `C-x /`. If you'd like to bind
 the keymap to an additional prefix (say, `C-c s`), you totally can:
 
 ```emacs
