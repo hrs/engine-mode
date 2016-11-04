@@ -23,13 +23,13 @@
 ;; results in your default browser.
 
 ;; The `defengine' macro can also take an optional key combination,
-;; prefixed with "C-c /":
+;; prefixed with "C-x /":
 
 ;; (defengine duckduckgo
 ;;   "https://duckduckgo.com/?q=%s"
 ;;   :keybinding "d")
 
-;; `C-c / d' is now bound to the new function
+;; `C-x / d' is now bound to the new function
 ;; engine/search-duckduckgo'! Nifty.
 
 ;;; License:
@@ -62,7 +62,7 @@
 
 (defun engine/set-keymap-prefix (prefix-key)
   "Bind the engine-mode keymap to a new prefix.
-For example, to use \"C-c s\" instead of the default \"C-c /\":
+For example, to use \"C-c s\" instead of the default \"C-x /\":
 
 (engine/set-keymap-prefix (kbd \"C-c s\"))"
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
@@ -148,7 +148,7 @@ For example, to search Wikipedia, use:
     :keybinding \"w\"
     :docstring \"Search Wikipedia!\")
 
-Hitting \"C-c / w\" will be bound to the newly-defined
+Hitting \"C-x / w\" will be bound to the newly-defined
 `engine/search-wikipedia' function."
 
   (assert (symbolp engine-name))
