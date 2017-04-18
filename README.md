@@ -159,6 +159,11 @@ to import them into Emacs.
   "http://maps.google.com/maps?q=%s"
   :docstring "Mappin' it up.")
 
+(defengine hoogle
+  "https://www.haskell.org/hoogle/?hoogle=%s"
+  :keybinding "h"
+  :docstring "Searchin' for Haskell types or identifiers.")
+
 (defengine project-gutenberg
   "http://www.gutenberg.org/ebooks/search/?query=%s")
 
