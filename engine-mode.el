@@ -65,6 +65,7 @@
 For example, to use \"C-c s\" instead of the default \"C-x /\":
 
 (engine/set-keymap-prefix (kbd \"C-c s\"))"
+  (define-key engine-mode-map (kbd engine/keybinding-prefix) nil)
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
 
 (defcustom engine/keybinding-prefix "C-x /"
