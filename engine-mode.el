@@ -51,9 +51,19 @@
 ;;; Code:
 (require 'cl-lib)
 
-(defvar engine-mode-map (make-sparse-keymap))
+(defcustom engine/keybinding-prefix "C-x /"
+  "The default engine-mode keybindings prefix."
+  :group 'engine-mode
+  :type 'string)
+
 (define-prefix-command 'engine-mode-prefixed-map)
 (defvar engine-mode-prefixed-map)
+
+(defvar engine-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd engine/keybinding-prefix) engine-mode-prefixed-map)
+    map)
+  "Keymap for `engine-mode'.")
 
 ;;;###autoload
 (define-minor-mode engine-mode
@@ -70,13 +80,6 @@ For example, to use \"C-c s\" instead of the default \"C-x /\":
 (engine/set-keymap-prefix (kbd \"C-c s\"))"
   (define-key engine-mode-map (kbd engine/keybinding-prefix) nil)
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
-
-(defcustom engine/keybinding-prefix "C-x /"
-  "The default engine-mode keybindings prefix."
-  :group 'engine-mode
-  :type 'string)
-
-(engine/set-keymap-prefix (kbd engine/keybinding-prefix))
 
 (defcustom engine/browser-function browse-url-browser-function
   "The default browser function used when opening a URL in an engine.
