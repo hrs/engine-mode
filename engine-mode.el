@@ -54,6 +54,7 @@
 (define-prefix-command 'engine-mode-prefixed-map)
 (defvar engine-mode-prefixed-map)
 
+;;;###autoload
 (define-minor-mode engine-mode
   "Minor mode for defining and querying search engines through Emacs.
 
