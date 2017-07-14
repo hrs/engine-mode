@@ -51,7 +51,8 @@
 (eval-when-compile (require 'cl))
 
 (defvar engine-mode-map (make-sparse-keymap))
-(defvar engine-mode-prefixed-map (make-sparse-keymap))
+(define-prefix-command 'engine-mode-prefixed-map)
+(defvar engine-mode-prefixed-map)
 
 (define-minor-mode engine-mode
   "Minor mode for defining and querying search engines through Emacs.
