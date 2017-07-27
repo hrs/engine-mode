@@ -2,7 +2,7 @@
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
 ;; Version: 2.1.0
-;; URL: https://github.com/hrs/engine-mode/engine-mode.el
+;; URL: https://github.com/hrs/engine-mode
 ;; Package-Requires: ((cl-lib "0.5"))
 
 ;; This file is NOT part of GNU Emacs.
