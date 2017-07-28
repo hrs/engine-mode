@@ -87,11 +87,15 @@ Defaults to `browse-url-browser-function'."
   :group 'engine-mode
   :type 'symbol)
 
-(defun engine/search-prompt (engine-name)
-  (concat "Search " (capitalize engine-name) ": "))
+(defun engine/search-prompt (engine-name default-word)
+  (if (string= default-word "")
+      (format "Search %s: " (capitalize engine-name))
+    (format "Search %s (%s): " (capitalize engine-name) default-word)))
 
 (defun engine/prompted-search-term (engine-name)
-  (read-string (engine/search-prompt engine-name) (thing-at-point 'symbol)))
+  (let ((current-word (or (thing-at-point 'symbol) "")))
+    (read-string (engine/search-prompt engine-name current-word)
+     nil nil current-word)))
 
 (defun engine/get-query (engine-name)
   "Return the selected region (if any) or prompt the user for a query."
