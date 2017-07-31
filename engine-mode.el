@@ -77,7 +77,7 @@
   "Bind the engine-mode keymap to a new prefix.
 For example, to use \"C-c s\" instead of the default \"C-x /\":
 
-(engine/set-keymap-prefix (kbd \"C-c s\"))"
+\(engine/set-keymap-prefix (kbd \"C-c s\"))"
   (define-key engine-mode-map (kbd engine/keybinding-prefix) nil)
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
 
@@ -137,7 +137,7 @@ function that will be applied to the search term before it's
 substituted into `search-engine-url'. For example, if we wanted
 to always upcase our search terms, we might use:
 
-(defengine duckduckgo
+\(defengine duckduckgo
   \"https://duckduckgo.com/?q=%s\"
   :term-transformation-hook 'upcase)
 
