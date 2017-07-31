@@ -49,7 +49,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
-(require 'cl-lib)
+(eval-when-compile (require 'cl-macs))
 
 (defcustom engine/keybinding-prefix "C-x /"
   "The default engine-mode keybindings prefix."
@@ -159,7 +159,7 @@ For example, to search Wikipedia, use:
 Hitting \"C-x / w\" will be bound to the newly-defined
 `engine/search-wikipedia' function."
 
-  (assert (symbolp engine-name))
+  (cl-assert (symbolp engine-name))
   `(prog1
      (defun ,(engine/function-name engine-name) (search-term)
        ,(or docstring (engine/docstring engine-name))
