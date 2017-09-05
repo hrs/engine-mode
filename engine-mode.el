@@ -81,9 +81,9 @@ For example, to use \"C-c s\" instead of the default \"C-x /\":
   (define-key engine-mode-map (kbd engine/keybinding-prefix) nil)
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
 
-(defcustom engine/browser-function browse-url-browser-function
+(defcustom engine/browser-function nil
   "The default browser function used when opening a URL in an engine.
-Defaults to `browse-url-browser-function'."
+Defaults to `nil' which means to go with `browse-url-browser-function'."
   :group 'engine-mode
   :type 'symbol)
 
@@ -106,7 +106,8 @@ Defaults to `browse-url-browser-function'."
 (defun engine/execute-search (search-engine-url browser-function search-term)
   "Display the results of the query."
   (interactive)
-  (let ((browse-url-browser-function browser-function))
+  (let ((browse-url-browser-function (or browser-function
+                                         browse-url-browser-function)))
     (browse-url
      (format search-engine-url
              (url-hexify-string search-term)))))
