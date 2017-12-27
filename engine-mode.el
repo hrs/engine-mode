@@ -108,8 +108,8 @@ Defaults to `browse-url-browser-function'."
   (interactive)
   (let ((browse-url-browser-function browser-function))
     (browse-url
-     (format search-engine-url
-             (url-hexify-string search-term)))))
+     (format-spec search-engine-url
+                  (format-spec-make ?s (url-hexify-string search-term))))))
 
 (defun engine/function-name (engine-name)
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
