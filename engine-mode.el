@@ -109,8 +109,8 @@ Defaults to `nil' which means to go with `browse-url-browser-function'."
   (let ((browse-url-browser-function (or browser-function
                                          browse-url-browser-function)))
     (browse-url
-     (format search-engine-url
-             (url-hexify-string search-term)))))
+     (format-spec search-engine-url
+                  (format-spec-make ?s (url-hexify-string search-term))))))
 
 (defun engine/function-name (engine-name)
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
