@@ -22,7 +22,8 @@ will take the selected region (or prompt for input, if no region is selected)
 and search GitHub for it, displaying the results in your default browser.
 
 The `defengine` macro can also take an optional key combination, prefixed with
-`engine/keymap-prefix` (which defaults to "C-x /"):
+`engine/keymap-prefix` (which defaults to "C-x /"). That keybinding will be
+wrapped in a call to `kbd`.
 
 ```emacs
 (defengine duckduckgo

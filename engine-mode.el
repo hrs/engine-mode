@@ -122,7 +122,7 @@ Defaults to `nil' which means to go with `browse-url-browser-function'."
 
 (defun engine/bind-key (engine-name keybinding)
   (when keybinding
-    `(define-key engine-mode-prefixed-map ,keybinding
+    `(define-key engine-mode-prefixed-map (kbd ,keybinding)
        (quote ,(engine/function-name engine-name)))))
 
 ;;;###autoload
