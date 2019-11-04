@@ -93,7 +93,7 @@ Defaults to `nil' which means to go with `browse-url-browser-function'."
     (format "Search %s (%s): " (capitalize engine-name) default-word)))
 
 (defun engine/prompted-search-term (engine-name)
-  (let ((current-word (or (thing-at-point 'symbol) "")))
+  (let ((current-word (or (thing-at-point 'symbol 'no-properties) "")))
     (read-string (engine/search-prompt engine-name current-word)
      nil nil current-word)))
 
