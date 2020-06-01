@@ -50,6 +50,7 @@
 
 ;;; Code:
 (eval-when-compile (require 'cl-macs))
+(require 'format-spec)
 
 (defcustom engine/keybinding-prefix "C-x /"
   "The default engine-mode keybindings prefix."
