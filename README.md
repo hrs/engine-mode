@@ -116,7 +116,7 @@ For example, to UPCASE all of your DuckDuckGo searches:
 ```emacs
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
-  :term-transformation-hook 'upcase)
+  :term-transformation-hook upcase)
 ```
 
 Or, to ensure that all your queries are encoded as latin-1:

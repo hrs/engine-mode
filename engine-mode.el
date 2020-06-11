@@ -145,7 +145,7 @@ to always upcase our search terms, we might use:
 
 \(defengine duckduckgo
   \"https://duckduckgo.com/?q=%s\"
-  :term-transformation-hook 'upcase)
+  :term-transformation-hook upcase)
 
 In this case, searching for \"foobar\" will hit the url
 \"https://duckduckgo.com/?q=FOOBAR\".
