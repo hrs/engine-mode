@@ -163,6 +163,9 @@ to import them into Emacs.
 (defengine project-gutenberg
   "http://www.gutenberg.org/ebooks/search/?query=%s")
 
+(defengine qwant
+  "https://www.qwant.com/?q=%s")
+
 (defengine rfcs
   "http://pretty-rfc.herokuapp.com/search?q=%s")
 
