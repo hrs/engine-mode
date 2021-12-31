@@ -165,6 +165,7 @@ For example, to search Wikipedia, use:
 Hitting \"C-x / w\" will be bound to the newly-defined
 `engine/search-wikipedia' function."
 
+  (declare (indent 1))
   (cl-assert (symbolp engine-name))
   `(prog1
      (defun ,(engine/function-name engine-name) (search-term)
