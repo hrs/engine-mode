@@ -64,7 +64,7 @@ uses globally to open links.
 
 The implementation of the `browse-url-browser-function` variable contains a
 comprehensive list of possible browser functions. You can get to that by hitting
-`C-h v browser-url-browser-function <RETURN>` and following the link to
+`C-h v browse-url-browser-function <RETURN>` and following the link to
 `browse-url.el`.
 
 ## Changing your browser on a per-engine basis
