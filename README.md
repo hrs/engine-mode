@@ -40,6 +40,16 @@ If you'd like to see a video on the whys and wherefores of this mode, check out
 
 `engine-mode` is available on MELPA.
 
+Using `use-package`:
+
+``` emacs
+(use-package engine-mode
+  :ensure t
+
+  :config
+  (engine-mode t))
+```
+
 You can also install it like any other elisp file by adding it to your load path
 and globally enabling it:
 
