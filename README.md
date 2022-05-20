@@ -101,6 +101,12 @@ the keymap to an additional prefix (say, `C-c s`), you totally can:
 (engine/set-keymap-prefix (kbd "C-c s"))
 ```
 
+If you use `use-package`, you can achieve the same thing with:
+
+``` emacs
+:bind-keymap ("C-c s" . engine-mode-prefixed-map)
+```
+
 ## Custom docstrings
 
 `defengine` assigns each engine a reasonable default docstring, but you can
