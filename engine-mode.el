@@ -116,9 +116,8 @@ Defaults to `browse-url-browser-function'."
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
 
 (defun engine/docstring (engine-name)
-  (concat "Search "
-          (capitalize (symbol-name engine-name))
-          " for the selected text. Prompt for input if none is selected."))
+  (format "Search %s for the selected text.\nPrompt for input if none is selected."
+          (capitalize (symbol-name engine-name))))
 
 (defun engine/bind-key (engine-name keybinding)
   (when keybinding
