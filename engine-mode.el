@@ -159,7 +159,7 @@ Keybindings are in the `engine-mode-map', so they're prefixed.
 For example, to search Wikipedia, use:
 
   (defengine wikipedia
-    \"http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s\"
+    \"https://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s\"
     :keybinding \"w\"
     :docstring \"Search Wikipedia!\")
 
