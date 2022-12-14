@@ -54,8 +54,8 @@
 
 (defcustom engine/keybinding-prefix "C-x /"
   "The default engine-mode keybindings prefix."
-  :group 'engine-mode
-  :type 'string)
+  :type '(choice (string :tag "Key")
+                 (const :tag "No keybinding" nil)))
 
 (define-prefix-command 'engine-mode-prefixed-map)
 (defvar engine-mode-prefixed-map)
@@ -79,7 +79,8 @@
 For example, to use \"C-c s\" instead of the default \"C-x /\":
 
 \(engine/set-keymap-prefix (kbd \"C-c s\"))"
-  (define-key engine-mode-map (kbd engine/keybinding-prefix) nil)
+  (when engine/keybinding-prefix
+    (define-key engine-mode-map (kbd engine/keybinding-prefix) nil))
   (define-key engine-mode-map prefix-key engine-mode-prefixed-map))
 
 (defcustom engine/browser-function browse-url-browser-function
