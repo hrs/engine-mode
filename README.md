@@ -182,9 +182,6 @@ to import them into Emacs.
 (defengine qwant
   "https://www.qwant.com/?q=%s")
 
-(defengine rfcs
-  "https://pretty-rfc.herokuapp.com/search?q=%s")
-
 (defengine stack-overflow
   "https://stackoverflow.com/search?q=%s")
 
