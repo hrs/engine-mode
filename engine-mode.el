@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2.2.1
+;; Version: 2.2.2
 ;; URL: https://github.com/hrs/engine-mode
 ;; Package-Requires: ((cl-lib "0.5"))
 
@@ -124,7 +124,7 @@ Defaults to `browse-url-browser-function'."
 
 (defun engine/bind-key (engine-name keybinding)
   (when keybinding
-    `(define-key engine-mode-prefixed-map (kbd ,keybinding)
+    `(keymap-set engine-mode-prefixed-map ,keybinding
        (quote ,(engine/function-name engine-name)))))
 
 ;;;###autoload
