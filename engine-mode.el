@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines from within Emacs
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2.2.2
+;; Version: 2.2.3
 ;; URL: https://github.com/hrs/engine-mode
 ;; Package-Requires: ((cl-lib "0.5"))
 
@@ -123,9 +123,18 @@ Defaults to `browse-url-browser-function'."
           (capitalize (symbol-name engine-name))))
 
 (defun engine/bind-key (engine-name keybinding)
+  "Bind KEYBINDING to ENGINE-NAME in the `engine-mode-prefixed-map'.
+
+Do nothing if KEYBINDING is nil.
+
+Use `keymap-set' instead of `define-key' if it's available, since
+it permits multiple keys in KEYBINDING."
   (when keybinding
-    `(keymap-set engine-mode-prefixed-map ,keybinding
-       (quote ,(engine/function-name engine-name)))))
+    (if (fboundp 'keymap-set)
+        `(keymap-set engine-mode-prefixed-map ,keybinding
+                     (quote ,(engine/function-name engine-name)))
+      `(define-key engine-mode-prefixed-map (kbd ,keybinding)
+                   (quote ,(engine/function-name engine-name))))))
 
 ;;;###autoload
 (cl-defmacro defengine (engine-name search-engine-url &key keybinding docstring (browser 'engine/browser-function) (term-transformation-hook 'identity))
