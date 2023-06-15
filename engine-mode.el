@@ -49,12 +49,13 @@
 (eval-when-compile (require 'cl-lib))
 (require 'format-spec)
 
-(defgroup engine-mode nil
+(defgroup engine nil
   "Define search engines, bind them to keybindings, and query them."
   :group 'external)
 
 (defcustom engine/keybinding-prefix "C-x /"
   "The default `engine-mode' keybindings prefix."
+  :group 'engine
   :type '(choice (string :tag "Key")
                  (const :tag "No keybinding" nil)))
 
@@ -87,7 +88,7 @@ For example, to use \"C-c s\" instead of the default \"C-x /\":
 (defcustom engine/browser-function browse-url-browser-function
   "The default browser function used when opening a URL in an engine.
 Defaults to `browse-url-browser-function'."
-  :group 'engine-mode
+  :group 'engine
   :type 'symbol)
 
 (defun engine--search-prompt (engine-name default-word)
