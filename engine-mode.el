@@ -90,26 +90,26 @@ Defaults to `browse-url-browser-function'."
   :group 'engine-mode
   :type 'symbol)
 
-(defun engine/search-prompt (engine-name default-word)
+(defun engine--search-prompt (engine-name default-word)
   "Return a search prompt for ENGINE-NAME, defaulting to DEFAULT-WORD."
   (if (string= default-word "")
       (format "Search %s: " (capitalize engine-name))
     (format "Search %s (%s): " (capitalize engine-name) default-word)))
 
-(defun engine/prompted-search-term (engine-name)
+(defun engine--prompted-search-term (engine-name)
   "Prompt the user for a search term for ENGINE-NAME.
 Default to the symbol at point."
   (let ((current-word (or (thing-at-point 'symbol 'no-properties) "")))
-    (read-string (engine/search-prompt engine-name current-word)
+    (read-string (engine--search-prompt engine-name current-word)
      nil nil current-word)))
 
-(defun engine/get-query (engine-name)
+(defun engine--get-query (engine-name)
   "Return the selected region or prompt the user for a query for ENGINE-NAME."
   (if (use-region-p)
       (buffer-substring (region-beginning) (region-end))
-    (engine/prompted-search-term engine-name)))
+    (engine--prompted-search-term engine-name)))
 
-(defun engine/execute-search (search-engine-url browser-function search-term)
+(defun engine--execute-search (search-engine-url browser-function search-term)
   "Search SEARCH-ENGINE-URL for SEARCH-TERM.
 Display the resulting URL with BROWSER-FUNCTION."
   (interactive)
@@ -118,19 +118,19 @@ Display the resulting URL with BROWSER-FUNCTION."
      (format-spec search-engine-url
                   (format-spec-make ?s (url-hexify-string search-term))))))
 
-(defun engine/function-name (engine-name)
+(defun engine--function-name (engine-name)
   "Return the name of the function for ENGINE-NAME.
 
 For example, if ENGINE-NAME is the symbol `github', return
 `engine/search-github'."
   (intern (concat "engine/search-" (downcase (symbol-name engine-name)))))
 
-(defun engine/docstring (engine-name)
+(defun engine--docstring (engine-name)
   "Construct and return a default docstring for ENGINE-NAME."
   (format "Search %s for the selected text.\nPrompt for input if none is selected."
           (capitalize (symbol-name engine-name))))
 
-(defun engine/bind-key (engine-name keybinding)
+(defun engine--bind-key (engine-name keybinding)
   "Bind KEYBINDING to ENGINE-NAME in the `engine-mode-prefixed-map'.
 
 Do nothing if KEYBINDING is nil.
@@ -140,9 +140,9 @@ it permits multiple keys in KEYBINDING."
   (when keybinding
     (if (fboundp 'keymap-set)
         `(keymap-set engine-mode-prefixed-map ,keybinding
-                     (quote ,(engine/function-name engine-name)))
+                     (quote ,(engine--function-name engine-name)))
       `(define-key engine-mode-prefixed-map (kbd ,keybinding)
-                   (quote ,(engine/function-name engine-name))))))
+                   (quote ,(engine--function-name engine-name))))))
 
 ;;;###autoload
 (cl-defmacro defengine (engine-name search-engine-url
@@ -192,12 +192,12 @@ Hitting \"C-x / w\" will be bound to the newly-defined
   (declare (indent 1))
   (cl-assert (symbolp engine-name))
   `(prog1
-       (defun ,(engine/function-name engine-name) (search-term)
-         ,(or docstring (engine/docstring engine-name))
+       (defun ,(engine--function-name engine-name) (search-term)
+         ,(or docstring (engine--docstring engine-name))
          (interactive
-          (list (engine/get-query ,(symbol-name engine-name))))
-         (engine/execute-search ,search-engine-url ,browser (,term-transformation-hook search-term)))
-     ,(engine/bind-key engine-name keybinding)))
+          (list (engine--get-query ,(symbol-name engine-name))))
+         (engine--execute-search ,search-engine-url ,browser (,term-transformation-hook search-term)))
+     ,(engine--bind-key engine-name keybinding)))
 
 (provide 'engine-mode)
 ;;; engine-mode.el ends here
