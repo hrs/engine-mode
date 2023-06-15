@@ -1,0 +1,37 @@
+# melpazoid <https://github.com/riscy/melpazoid> build checks.
+
+name: Melpazoid
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Install Emacs
+      uses: purcell/setup-emacs@master
+      with:
+        version: snapshot
+
+    - name: Install Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+
+    - name: Install Melpazoid
+      run: |
+        python -m pip install --upgrade pip
+        git clone https://github.com/riscy/melpazoid.git ~/melpazoid
+        pip install ~/melpazoid
+
+    - name: Run
+      env:
+        LOCAL_REPO: ${{ github.workspace }}
+        RECIPE: (engine-mode :repo "hrs/engine-mode" :fetcher github)
+      run: echo $GITHUB_REF && make -C ~/melpazoid
+      continue-on-error: true
