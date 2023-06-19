@@ -88,4 +88,15 @@
               :to-equal
               "Search My-Engine for the selected text.\nPrompt for input if none is selected.")))
 
+(describe "defengine"
+          (it "takes a :term-transformation-hook argument and applies it to search terms"
+              (defengine wikipedia
+                "https://www.wikipedia.org/search-redirect.php?search=%s"
+                :term-transformation-hook upcase)
+
+              (let ((engine/browser-function (lambda (url &rest _) url)))
+                (expect (engine/search-wikipedia "foo bar")
+                        :to-equal
+                        "https://www.wikipedia.org/search-redirect.php?search=FOO%20BAR"))))
+
 ;;; engine-mode-test.el ends here
