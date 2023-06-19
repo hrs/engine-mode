@@ -50,7 +50,7 @@
 
                         (insert "lorem ipsum")
                         (goto-char 3)
-                        (push-mark-command (point))
+                        (push-mark-command (point) t)
                         (goto-char 10)
 
                         (engine--get-query "wikipedia"))
@@ -83,20 +83,67 @@
                       'engine/search-github)))
 
 (describe "engine--docstring"
-  (it "returns a default docstring with the engine name interpolated"
-      (expect (engine--docstring 'my-engine)
-              :to-equal
-              "Search My-Engine for the selected text.\nPrompt for input if none is selected.")))
+          (it "returns a default docstring with the engine name interpolated"
+              (expect (engine--docstring 'my-engine)
+                      :to-equal
+                      "Search My-Engine for the selected text.\nPrompt for input if none is selected.")))
+
+(defun expect-binding (function-name desc)
+  "Test that FUNCTION-NAME has keybinding DESC."
+  (expect (member desc
+                  (mapcar #'key-description (where-is-internal function-name engine-mode-map)))
+          :not :to-be nil))
 
 (describe "defengine"
-          (it "takes a :term-transformation-hook argument and applies it to search terms"
-              (defengine wikipedia
-                "https://www.wikipedia.org/search-redirect.php?search=%s"
-                :term-transformation-hook upcase)
+          (describe ":keybinding"
+                    (before-each
+                     ;; Restore keymaps to their default values
+                     (setq engine-mode-prefixed-map (make-sparse-keymap))
+                     (setq engine-mode-map
+                           (let ((map (make-sparse-keymap)))
+                             (define-key map (kbd engine/keybinding-prefix) engine-mode-prefixed-map)
+                             map)))
 
-              (let ((engine/browser-function (lambda (url &rest _) url)))
-                (expect (engine/search-wikipedia "foo bar")
-                        :to-equal
-                        "https://www.wikipedia.org/search-redirect.php?search=FOO%20BAR"))))
+                    (it "binds a key with the default prefix"
+                        (defengine wikipedia "" :keybinding "w")
+
+                        (expect-binding 'engine/search-wikipedia "C-x / w"))
+
+                    (it "binds a key with a custom prefix"
+                        (engine/set-keymap-prefix (kbd "C-c s"))
+
+                        (defengine wikipedia "" :keybinding "w")
+
+                        (expect-binding 'engine/search-wikipedia "C-c s w"))
+
+                    (it "binds sequential keys with the default prefix"
+                        (defengine wikipedia "" :keybinding "w o w")
+
+                        (expect-binding 'engine/search-wikipedia "C-x / w o w"))
+
+                    (it "binds sequential keys with a custom prefix"
+                        (engine/set-keymap-prefix (kbd "C-c s"))
+
+                        (defengine wikipedia "" :keybinding "w o w")
+
+                        (expect-binding 'engine/search-wikipedia "C-c s w o w"))
+
+                    (it "rebinds the keymap even after engines are defined"
+                        (defengine wikipedia "" :keybinding "w")
+
+                        (engine/set-keymap-prefix (kbd "C-c s"))
+
+                        (expect-binding 'engine/search-wikipedia "C-c s w")))
+
+          (describe ":term-transformation-hook"
+                    (it "applies the hook to search terms"
+                        (defengine wikipedia
+                          "https://www.wikipedia.org/search-redirect.php?search=%s"
+                          :term-transformation-hook upcase)
+
+                        (let ((engine/browser-function (lambda (url &rest _) url)))
+                          (expect (engine/search-wikipedia "foo bar")
+                                  :to-equal
+                                  "https://www.wikipedia.org/search-redirect.php?search=FOO%20BAR")))))
 
 ;;; engine-mode-test.el ends here
