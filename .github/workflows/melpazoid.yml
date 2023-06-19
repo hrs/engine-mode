@@ -1,7 +1,7 @@
 # melpazoid <https://github.com/riscy/melpazoid> build checks.
 
 name: Melpazoid
-on: [push, pull_request]
+on: pull_request
 
 jobs:
   build:
