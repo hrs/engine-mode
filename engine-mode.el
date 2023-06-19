@@ -3,7 +3,7 @@
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
 ;; Version: 2.2.4
 ;; URL: https://github.com/hrs/engine-mode
-;; Package-Requires: ((cl-lib "0.5"))
+;; Package-Requires: ((emacs "24.3"))
 
 ;; This file is NOT part of GNU Emacs.
 
