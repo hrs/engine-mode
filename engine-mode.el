@@ -1,7 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines
 
 ;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
-;; Version: 2.2.3
+;; Version: 2.2.4
 ;; URL: https://github.com/hrs/engine-mode
 ;; Package-Requires: ((cl-lib "0.5"))
 
