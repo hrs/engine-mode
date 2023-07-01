@@ -148,19 +148,26 @@ Or, to ensure that all your queries are encoded as latin-1:
     :keybinding "c")
 #+end_src
 
-Some search engines support querying for exact phrases by enclosing
-the search string into double quotes. Transformations could be useful
-in this case to perform a literal search instead if the universal
-argument is present:
+You could also use a ~:term-transformation-hook~ to make an engine behave
+differently when given a [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Command-Arguments.html][prefix argument]] (i.e. typing =C-u= before invoking the
+engine).
+
+Some search engines support querying for exact phrases by enclosing the search
+string with double quotes. Transformations could be useful in this case to
+perform a literal search instead if the universal argument is present:
 
 #+begin_src emacs-lisp
   (defengine duckduckgo
     "https://duckduckgo.com/?q=%s"
-    :term-transformation-hook (lambda (term) (if current-prefix-arg (concat "\"" term "\"") term)))
+    :term-transformation-hook (lambda (term) (if current-prefix-arg
+                                            (concat "\"" term "\"")
+                                          term))
+    :keybinding "d")
 #+end_src
 
-The above is especially beneficial when searching for the contents of
-the region.
+Typing =C-x / d= will perform a regular search, but typing =C-u C-x / d= will
+wrap your query in quotes before searching for it. That's especially useful when
+searching for the contents of the region.
 
 ** Importing keyword searches from other browsers
 
