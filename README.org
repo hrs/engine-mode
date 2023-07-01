@@ -148,6 +148,20 @@ Or, to ensure that all your queries are encoded as latin-1:
     :keybinding "c")
 #+end_src
 
+Some search engines support querying for exact phrases by enclosing
+the search string into double quotes. Transformations could be useful
+in this case to perform a literal search instead if the universal
+argument is present:
+
+#+begin_src emacs-lisp
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :term-transformation-hook (lambda (term) (if current-prefix-arg (concat "\"" term "\"") term)))
+#+end_src
+
+The above is especially beneficial when searching for the contents of
+the region.
+
 ** Importing keyword searches from other browsers
 
 Since many browsers save keyword searches using the same format as engine-mode
