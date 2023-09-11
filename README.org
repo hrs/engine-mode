@@ -177,6 +177,28 @@ import them into Emacs.
 
 [[https://github.com/sshaw][@sshaw]] has written a script to [[https://gist.github.com/sshaw/9b635eabde582ebec442][import from Chrome on OS X]]. Thanks for that!
 
+** Comparison with =webjump=
+
+Emacs has a perfectly lovely built-in =webjump= package which allows the user to
+define a set of URLs, interpolate search terms into them, and visit them in the
+browser.
+
+Why might you use =engine-mode= instead of =webjump=?
+
+- You want to bind specific searches to keybindings. Because =engine-mode= defines
+  a function for each engine, keybindings in =engine-mode= can be associated
+  directly with specific searches.
+- You'd like to associate browser functions with engines on a case-by-case
+  basis. For example, if you want to perform some searches in Firefox, and other
+  searches in =eww=, that's trivial in =engine-mode=.
+- You like some of =engine-mode='s minor UI conveniences. If you've got a region
+  selected, for example, =engine-mode= will use that as the search query, while
+  =webjump= will ignore it and offer an empty prompt.
+
+If you're not interested in these features, =webjump= is a great choice! Honestly,
+the author of =engine-mode= probably wouldn't have bothered writing it if they'd
+known =webjump= existed at the time. :sweat_smile:
+
 ** Engine examples
 
 #+begin_src emacs-lisp
