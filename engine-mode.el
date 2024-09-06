@@ -1,6 +1,7 @@
 ;;; engine-mode.el --- Define and query search engines
 
-;; Author: Harry R. Schwartz <hello@harryrschwartz.com>
+;; Author: Robin Schwartz <hello@robinschwartz.me>
+;; Maintainer: Robin Schwartz <hello@robinschwartz.me>
 ;; Version: 2.2.4
 ;; URL: https://github.com/hrs/engine-mode
 ;; Package-Requires: ((emacs "24.4"))
