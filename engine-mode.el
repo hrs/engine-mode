@@ -201,5 +201,17 @@ Hitting \"C-x / w\" will be bound to the newly-defined
          (engine--execute-search ,search-engine-url ,browser (,term-transformation-hook search-term)))
      ,(engine--bind-key engine-name keybinding)))
 
+(defun engine-search-engines (&optional name query)
+  "A fast interactive entry of all defined search engines."
+  (interactive (list
+                (completing-read
+                 "Select Search Engine: "
+                 (mapcar
+                  (lambda (str) (replace-regexp-in-string "engine\/search-" "" (symbol-name str)))
+                  (apropos-internal "engine/search-")))
+                (read-string "Input Search Query: ")))
+  (let ((engine (intern (format "engine/search-%s" name))))
+    (funcall engine query)))
+
 (provide 'engine-mode)
 ;;; engine-mode.el ends here
