@@ -1,6 +1,4 @@
-;;; engine-mode-test.el --- tests for engine-mode.el
-
-;; -*- lexical-binding: t; -*-
+;;; engine-mode-test.el --- tests for engine-mode.el -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
